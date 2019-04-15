@@ -1,0 +1,8 @@
+This is your new Play application
+=================================
+
+This file will be packaged with your application, when using `activator dist`.
+
+activator runをする前に
+set _JAVA_OPTIONS="-Dfile.encoding=SJIS"
+を実行する

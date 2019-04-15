@@ -1,0 +1,77 @@
+@(message: String, form1:Form[models.SampleForm], projectRequestList:List[models.request.ProjectRequest])
+@import play.i18n._
+
+@main("welcome!!") {
+@* <meta charset="utf-8"> FOR ECLIPSE CHARSET DETECTION *@
+	<style type = "text/css">
+/* 		thead { */
+/* 			background-color: #d9edf7; */
+/* 		} */
+		.submit-button {
+			text-align : right;
+		}
+		.table-row {
+			padding-top : 10px;
+		}
+	</style>
+	<div class="container">
+
+<!-- 		<h1>ok!</h1>
+	
+		<p>@message</p> -->
+		
+		@helper.form(action = routes.Application.send) { 
+		<div class="row">
+			<div class="form-group col-md-2">
+				@(helper.inputText(field = form1("message")	,
+					              'class -> "form-control"	,
+					              '_label -> Messages.get("index.message") 		,
+					              'maxlength -> "50"		,
+					              '_showConstraints -> false)
+				)
+			</div>	
+		</div>	
+		<div class="row">
+			<div class="form-group col-md-2">		
+				<input type = "submit" value="そうしん">
+			</div>	
+		</div>	
+		}
+		@helper.form(action = routes.CreateNew.createNewProject) { 
+			<div class = "submit-button">
+				<button type="submit" class="btn btn-primary" id="createProject" name="action" value="createProject">@Messages.get("project.create.new")</button>
+				<button type="submit" class="btn btn-info" id="createTask" name="action" value="createTask">@Messages.get("task.create.new")</button>
+			</div>
+		}
+		<div class="row table-row">
+			<div class="form-group col-md-12">		
+                <table class="table table-hover table-bordered table-striped" id="searchTable">
+                    <thead>
+                        <tr class="bg-info">
+                            <th style="width:20%;">@Messages.get("project.created.name")</th>
+                            <th style="width:20%;">@Messages.get("project.created.date")</th>
+                            <th style="width:10%;">@Messages.get("project.created.progress.meter")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if(projectRequestList.size() != 0){
+                        @for(ProjectRequest <- projectRequestList) {
+                            <tr class="nth-of-type">
+                                <td style="width:20%;"><a class="nav-link" href="http://localhost:9000/detail/project/@ProjectRequest.id">@ProjectRequest.name</a></td>
+                                <td style="width:20%;">@ProjectRequest.date</td>
+                                <td style="width:10%;">@ProjectRequest.progressMeter</td>
+                            </tr>
+                          }
+                    } else {
+                            <tr class="active">
+                                <td style="display:none;"></td>
+                                <td style="display:none;"></td>
+                                <td style="display:none;"></td>
+                            </tr>
+                    }
+                    </tbody>
+                </table>			
+            </div>	
+		</div>	
+	</div>
+}

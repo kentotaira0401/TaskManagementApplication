@@ -1,0 +1,171 @@
+@(projectRequest:models.request.ProjectRequest)
+@import play.i18n._
+
+@main("detail-page") {
+@* <meta charset="utf-8"> FOR ECLIPSE CHARSET DETECTION *@
+  <style type="text/css">
+
+h1 {
+	padding-bottom: 20px;
+}
+.box{
+    border-radius: 8px;
+}
+.box__list-task{
+	padding: 20px 10px 10px;
+}
+.btn-secondary{
+	width: 290px;
+	color: #98d7ff;
+	font-size: 0.7rem;
+}
+.task-button{
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-bottom: 15px; 
+}
+.non-progress, .non-progress-header{
+	background-color: #f9f7f5;
+}
+
+.non-progress-header{
+	padding-top: 20px;
+	padding-left: 10px;
+	background:linear-gradient(180deg,#4dabff 0%,#4dabff 25%,#f9f7f5 25%,#f9f7f5 100%);
+	border-radius: 8px;
+}
+.task-header{
+	padding: 5px 20px 20px;
+} 
+
+#exampleTextarea{
+    margin: 5px 15px 15px;
+    width: 290px;
+}
+
+#cancel-task-button{
+	width: 200px;
+    margin: 0 0 0 auto;
+    display: inline;
+    
+}
+
+#output-add-button, #cancel-button{
+    width: 100px;
+}
+</style>
+<body class style>
+  <div class="container">
+	<!-- <h1>projectRequest.name</h1> --><!-- これはできなかった -->
+	<h1>@projectRequest.name</h1>
+	<hr>
+	<!-- <h1>@{projectRequest.getName}pj</h1> -->
+		@helper.form(action = routes.Application.createdProject) { 
+	
+	<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
+	<div class="non-progress-header">@projectRequest.name</div>
+
+			<div id="new-task"></div>
+			<div id="cancel-task-button"></div>
+			<div class="task-button" id ="add-task">
+				<button type="button" class="btn btn-secondary btn-lg" onclick="clickBtn3()"> ＋ タスクの追加 </button>
+			</div>
+			<div class="box__list-task" id = "task-list">
+				<div class="box shadow-sm card border-light mb-2 inside-project" style="max-width: 18rem;">
+					<div class="task-header">@projectRequest.name</div>
+					<div class="card-body">
+						<h4 class="card-title">@projectRequest.id</h4>
+						<p class="card-text">@projectRequest.explanation</p>
+					</div>
+				</div>
+			</div>
+
+		<div class="card-body">
+	    <h4 class="card-title">@projectRequest.id</h4>
+	    <p class="card-text">@projectRequest.explanation</p>
+	  </div>
+	</div>
+
+  </div>	
+</body>
+
+<script>
+	// タスク追加ボタン押下時
+	function clickBtn3() {
+		const newTask = document.getElementById("new-task");
+		const cancelTaskButton = document.getElementById("cancel-task-button");
+		// 要素の追加
+		if (!newTask.hasChildNodes()) {
+			// タスク名入力用テキストフィールド出力
+			const input1 = document.createElement("input");
+			input1.setAttribute("type", "textarea");
+			input1.setAttribute("class", "form-control");
+			input1.setAttribute("id", "exampleTextarea");
+			input1.setAttribute("rows", "2");
+			newTask.appendChild(input1);
+			
+			//　追加ボタン出力
+			const outputAddButton = document.createElement("button");
+			outputAddButton.setAttribute("type", "button");
+			outputAddButton.setAttribute("class", "btn btn-primary");
+			outputAddButton.setAttribute("id", "output-add-button");
+			outputAddButton.setAttribute("onclick", "clickBtn4()");
+			cancelTaskButton.appendChild(outputAddButton);
+			
+			// ボタンに「追加」出力
+			var newtextAdd = document.createTextNode("追加");
+			var addTaskButton2 = document.getElementById("output-add-button");
+			addTaskButton2.appendChild(newtextAdd);
+			
+			//　キャンセルボタン出力
+			const cancelButton = document.createElement("button");
+			cancelButton.setAttribute("type", "button");
+			cancelButton.setAttribute("class", "btn btn-secondary");
+			cancelButton.setAttribute("id", "cancel-button");
+			cancelButton.setAttribute("onclick", "clickBtn5()");
+			cancelTaskButton.appendChild(cancelButton);
+			
+			// ボタンに「キャンセル」出力
+			var newtext = document.createTextNode("キャンセル");
+			var cancelTaskButton2 = document.getElementById("cancel-button");
+			cancelTaskButton2.appendChild(newtext);
+			
+			// タスク追加ボタン削除
+			const addTask = document.getElementById("add-task");
+			if (addTask.hasChildNodes()) {
+				addTask.remove(addTask);
+			}
+			
+		}
+	}
+	// キャンセルボタン押下時処理
+	function clickBtn5() {
+		// 
+		const addTask = document.getElementById("add-task");
+		const newTask = document.getElementById("new-task");
+		const cancelTaskButton = document.getElementById("cancel-task-button");
+		
+		// タスク追加ボタンを再度出現させる
+		if (addTask==null) {
+			const element = document.getElementById('cancel-task-button');
+			element.insertAdjacentHTML('afterend', '<div class="task-button" id ="add-task">');
+			const div1 = document.getElementById("add-task");
+			div1.insertAdjacentHTML('afterbegin', '<button type="button" class="btn btn-secondary btn-lg" onclick="clickBtn3()"> ＋ タスクの追加 </button>');
+		}
+		//　タスク名用テキストエリア消去
+		if (newTask.hasChildNodes()) {
+			newTask.removeChild(newTask.firstChild);
+		}
+		//　キャンセルボタン消去
+		if (cancelTaskButton.hasChildNodes()) {
+			cancelTaskButton.removeChild(cancelTaskButton.firstChild);
+			cancelTaskButton.removeChild(cancelTaskButton.firstChild);
+		}
+		
+	}
+</script>
+
+}
+		
+
+}

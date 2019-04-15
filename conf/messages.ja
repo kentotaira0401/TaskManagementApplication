@@ -1,0 +1,33 @@
+##################################
+#        　　　　　ページタグ部分　　                        #                       
+##################################
+page.tag.index 			= トップページ
+page.tag.detailProject 	= プロジェクト詳細ページ
+
+
+##################################
+#        エラーメッセージ表示                        #                       
+##################################
+error.required 	= 入力必須です
+error.invalid 	= 正しい形式で入力してください
+error.max 		= {0}以下で入力してください
+error.min 		= {0}以上で入力してください
+error.email 	= メールアドレスを入力してください
+error.minLength = {0}文字以上を入力してください
+error.maxLength = {0}文字以下を入力してください
+
+##################################
+#        　　　　　トップページ　　　　                        #                       
+##################################
+index.message = メッセージ
+
+##################################
+#			プロジェクト				 #
+##################################
+project.create.succeed 	= プロジェクトを作成しました
+project.create.failure 	= プロジェクトの作成に失敗しました
+project.created.name 	= プロジェクト名
+project.created.date 	= 期日
+project.created.progress.meter = 進捗度(%)
+project.create.new 		= プロジェクト新規作成
+task.create.new 		= タスク新規作成

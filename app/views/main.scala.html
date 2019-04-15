@@ -1,0 +1,24 @@
+@(title: String)(content: Html)
+@import play.i18n._
+
+@* <meta charset="utf-8"> FOR ECLIPSE CHARSET DETECTION *@<!-- viewsの文字化け対策(各htmlに必要※要改善) -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>@title</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/jquery-2.2.3-min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("stylesheets/bootstrap/js/bootstrap.min.js")"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/css/bootstrap-theme.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/css/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/css/index.css")">
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/hello.js")" ></script>
+    </head>
+    <body>
+        @content
+    </body>
+</html>

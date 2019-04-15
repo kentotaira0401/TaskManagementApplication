@@ -1,0 +1,109 @@
+@(message: String, newProjectForm:Form[models.form.NewProjectForm])
+@import play.i18n._
+
+@main("Welcome to Play") {
+@* <meta charset="utf-8"> FOR ECLIPSE CHARSET DETECTION *@
+
+  <!-- Datepicker -->
+<!--   <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/css/bootstrap-datepicker.min.css")"> -->
+<!--   <script type="text/javascript" src="@routes.Assets.versioned("stylesheets/bootstrap/js/bootstrap-datepicker.min.js")"></script> -->
+<!--     <script type="text/javascript" src="@routes.Assets.versioned("stylesheets/bootstrap/js/locales/bootstrap-datepicker.ja.js")"></script> -->
+  <style type="text/css">
+  	.datepicker-days th.dow:nth-child(6),
+    .datepicker-days td:nth-child(6) {
+        color: #00f;
+    }
+    .datepicker-days th.dow:last-child,
+    .datepicker-days td:last-child {
+        color: #f00;
+    }
+  </style>
+    <div class="container">
+		<h1>プロジェクト新規作成</h1>
+	
+		<p>@message</p>
+			@helper.form(action = routes.Application.createdProject) { 
+		
+		<div class="row">
+			<div class ="form-group col-md-2">
+				@(helper.inputText(newProjectForm("projectName"),
+			                          'class -> "form-control",
+			                          '_label -> "プロジェクト名" ,
+			                          'maxlength -> "30",
+			                          '_showConstraints -> false,
+			                          '_showErrors -> true,
+			                          'style -> "ime-mode:disabled")
+				)
+			</div>
+			<div class ="form-group col-md-4">
+				@(helper.textarea(newProjectForm("explanation"),
+			                          'class -> "form-control",
+			                          '_label -> "説明(30字以内)" ,
+			                          'maxlength -> "30",
+			                          '_showConstraints -> false,
+			                          '_showErrors -> true,
+			                          'style -> "ime-mode:disabled")
+				)			
+			</div>
+		</div>
+		<div class="row">
+			<div class ="form-group col-md-2">
+				@(helper.inputDate(newProjectForm("date"),
+			                          'class -> "form-control datepicker",
+			                          'id -> "deadline",
+			                          '_label -> "期限" ,
+			                          'maxlength -> "20",
+			                          '_showConstraints -> false,
+			                          '_showErrors -> true,
+			                          'style -> "ime-mode:disabled")
+				)			
+			</div>
+			<div class ="form-group col-md-2">
+				@(helper.inputText(newProjectForm("progressMeter"),
+			                          'class -> "form-control progress-meter",
+			                          '_label -> "進捗度(%)" ,
+			                          'maxlength -> "5",
+			                          '_showConstraints -> false,
+			                          '_showErrors -> true,
+			                          'style -> "ime-mode:disabled")
+				)
+			</div>
+		</div>
+		<div class="row">
+			<div class ="form-group col-md-3">
+				<input type = "submit" value="そうしん">
+			</div>
+		</div>
+	</div>	
+	<script type="text/javascript">
+
+	    $(document).ready(function(){	    
+	    	document.getElementById("deadline").value = getNow();
+	    });
+	    
+	    function getNow() {
+	    	var now = new Date();
+	    	var year = now.getFullYear();
+	    	if(now.getMonth()+1>=10){
+	    		var mon = now.getMonth()+1; //
+	    	}else{
+		    	var mon = now.getMonth()+1; //
+		    	mon = "0"+mon;
+	    	}
+	    	if(now.getDate()>=10){
+		    	var day = now.getDate();
+	    	}else{
+		    	var day = "0"+now.getDate();
+	    	}
+
+	    	//
+	    	var dayNow = year + "-" + mon + "-" + day; 
+	    	return dayNow;
+    	}
+
+    </script>
+    
+		}
+		
+
+}
