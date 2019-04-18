@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+h1 {
+	padding-bottom: 20px;
+}
+.container{
+	margin-top: 20px;
+}
+.box{
+    border-radius: 8px;
+}
+.box__list-task{
+	padding: 20px 10px 10px;
+}
+.btn-primary{
+	margin-right: 5px;
+}
+.btn-secondary{
+	width: 290px;
+	color: #98d7ff;
+	font-size: 0.7rem;
+}
+.task-button{
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-bottom: 15px; 
+}
+.non-progress, .non-progress-header{
+	background-color: #f9f7f5;
+}
+
+.non-progress-header{
+	padding-top: 20px;
+	padding-left: 10px;
+	background:linear-gradient(180deg,#4dabff 0%,#4dabff 25%,#f9f7f5 25%,#f9f7f5 100%);
+	border-radius: 8px;
+}
+.task-header{
+	padding: 15px 20px 50px;
+} 
+
+#exampleTextarea{
+    margin: 5px 15px 15px;
+    width: 290px;
+}
+
+#cancel-task-button{
+	width: 210px;
+    margin: 0 0 0 auto;
+    display: inline;
+    
+}
+
+#output-add-button, #cancel-button{
+    width: 100px;
+}
+
+.shadow-sm-original {
+	max-width: 18rem;
+    /* -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.125) !important; */
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.2) !important; /* 影の濃さ */
+}
