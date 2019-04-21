@@ -12,106 +12,129 @@
 	<h1>@projectRequest.name</h1>
 	<hr>
 	<!-- <h1>@{projectRequest.getName}pj</h1> -->
-		@helper.form(action = routes.Application.createdProject) { 
 	
-	<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
-	<div class="non-progress-header">@projectRequest.name</div>
+	<table>
+		<tr>
+		<td style="padding-right: 20px;">
+		<!-- ここからボックス作成 -->
+			<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
+			<div class="non-progress-header">@projectRequest.name</div>
+
+			<div id="new-task">
+				<input type="textarea" class="form-control" id="exampleTextarea" rows="2" placeholder="新しいタスク名" style="display: none">
+			</div>
+			<div class="task-buttons">
+	  			<button class="btn btn-primary" id="output-add-button" style="display:none">追加</button>
+	 			<button class="btn btn-secondary" id="cancel-button" style="display: none">キャンセル</button>
+			</div>
+			<div class="task-button" id ="add-task">
+				<button type="button" class="btn btn-secondary btn-lg addButton" > ＋ タスクの追加 </button>
+			</div>
+			<div style="height:400px;padding:10px;overflow:auto;">
+				<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+				<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+								<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+								<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+								<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+			</div>
+
+			</div>
+			</td>
+			
+			<!-- ここから進行中タスク -->
+			<td>
+		<!-- ここからボックス作成 -->
+			<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
+			<div class="non-progress-header">@projectRequest.name</div>
 
 			<div id="new-task"></div>
 			<div id="cancel-task-button"></div>
 			<div class="task-button" id ="add-task">
 				<button type="button" class="btn btn-secondary btn-lg" onclick="clickBtn3()"> ＋ タスクの追加 </button>
 			</div>
-			<div class="box__list-task" id = "task-list">
-				<div class="box shadow-sm-original card border-light mb-2 inside-project">
-					<div class="task-header">@projectRequest.name</div>
+			<div style="height:400px;padding:10px;overflow:auto;">
+				<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+				<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+								<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+								<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
+				</div>
+								<div class="box__list-task" id = "task-list">
+					<div class="box shadow-sm-original card border-light mb-2 inside-project">
+						<div class="task-header">@projectRequest.name</div>
+					</div>
 				</div>
 			</div>
 
-
-	</div>
-
-  </div>	
+			</div>
+			</td>
+			</tr>
+		</table>
+  </div>
+			
 </body>
 
 <script>
-	// タスク追加ボタン押下時
-	function clickBtn3() {
-		const newTask = document.getElementById("new-task");
-		const cancelTaskButton = document.getElementById("cancel-task-button");
-		// 要素の追加
-		if (!newTask.hasChildNodes()) {
-			// タスク名入力用テキストフィールド出力
-			const input1 = document.createElement("input");
-			input1.setAttribute("type", "textarea");
-			input1.setAttribute("class", "form-control");
-			input1.setAttribute("id", "exampleTextarea");
-			input1.setAttribute("rows", "2");
-			input1.setAttribute("placeholder", "新しいタスク名");
-			newTask.appendChild(input1);
-			
-			//　追加ボタン出力
-			const outputAddButton = document.createElement("button");
-			outputAddButton.setAttribute("type", "button");
-			outputAddButton.setAttribute("class", "btn btn-primary");
-			outputAddButton.setAttribute("id", "output-add-button");
-			outputAddButton.setAttribute("onclick", "clickBtn4()");
-			cancelTaskButton.appendChild(outputAddButton);
-			
-			// ボタンに「追加」出力
-			var newtextAdd = document.createTextNode("追加");
-			var addTaskButton2 = document.getElementById("output-add-button");
-			addTaskButton2.appendChild(newtextAdd);
-			
-			//　キャンセルボタン出力
-			const cancelButton = document.createElement("button");
-			cancelButton.setAttribute("type", "button");
-			cancelButton.setAttribute("class", "btn btn-secondary");
-			cancelButton.setAttribute("id", "cancel-button");
-			cancelButton.setAttribute("onclick", "clickBtn5()");
-			cancelTaskButton.appendChild(cancelButton);
-			
-			// ボタンに「キャンセル」出力
-			var newtext = document.createTextNode("キャンセル");
-			var cancelTaskButton2 = document.getElementById("cancel-button");
-			cancelTaskButton2.appendChild(newtext);
-			
-			// タスク追加ボタン削除
-			const addTask = document.getElementById("add-task");
-			if (addTask.hasChildNodes()) {
-				addTask.remove(addTask);
-			}
-			
-		}
-	}
-	// キャンセルボタン押下時処理
-	function clickBtn5() {
-		// 
-		const addTask = document.getElementById("add-task");
-		const newTask = document.getElementById("new-task");
-		const cancelTaskButton = document.getElementById("cancel-task-button");
-		
-		// タスク追加ボタンを再度出現させる
-		if (addTask==null) {
-			const element = document.getElementById('cancel-task-button');
-			element.insertAdjacentHTML('afterend', '<div class="task-button" id ="add-task">');
-			const div1 = document.getElementById("add-task");
-			div1.insertAdjacentHTML('afterbegin', '<button type="button" class="btn btn-secondary btn-lg" onclick="clickBtn3()"> ＋ タスクの追加 </button>');
-		}
-		//　タスク名用テキストエリア消去
-		if (newTask.hasChildNodes()) {
-			newTask.removeChild(newTask.firstChild);
-		}
-		//　キャンセルボタン消去
-		if (cancelTaskButton.hasChildNodes()) {
-			cancelTaskButton.removeChild(cancelTaskButton.firstChild);
-			cancelTaskButton.removeChild(cancelTaskButton.firstChild);
-		}
-		
-	}
+$(function(){
+    $('.addButton').click(function(){
+    	if($(this).css('display') != 'none'){
+    		$(this).hide();				//①
+    		$('.task-button').hide();	//②　①と②はセットで隠す
+    		$('#exampleTextarea').show();
+    		$('#output-add-button').show();
+    		$('#cancel-button').show();
+    	}
+    });
+    
+    $('#cancel-button').click(function(){
+    	if($('.addButton').css('display') == 'none'){
+    		$(this).hide();
+    		$('#output-add-button').hide();
+    		$('#exampleTextarea').hide();
+    		$('.task-button').show();	
+    		$('.addButton').show();				
+    	}
+    });
+    
+});
+ 
 </script>
 
-}
+
 		
 
 }

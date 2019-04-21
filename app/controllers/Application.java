@@ -1,7 +1,9 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -65,10 +67,12 @@ public class Application extends Controller {
     		System.out.println("11");
 	    	return badRequest(views.html.create.newProject.render("ERROR", f));
 	    }
-    	String name 		= f.get().getProjectName();
-    	String explanation 	= f.get().getExplanation();
-		Date date 			= f.get().getDate();
+    	String name 		 = f.get().getProjectName();
+    	String explanation 	 = f.get().getExplanation();
+		Date closingDate 	 = f.get().getClosingDate();
 		Double progressMeter = f.get().getProgressMeter();
+
+
 		if(progressMeter!=100.0) {
 			finishFlag	= CommonUtil.FINISH_FLAG_YET;
 		}else {
@@ -77,9 +81,10 @@ public class Application extends Controller {
 		Project project = new Project();
 		project.setName(name);
 		project.setExplanation(explanation);
-		project.setDate(date);
+		project.setClosing_date(closingDate);
 		project.setProgressMeter(progressMeter);
 		project.setFinishFlag(finishFlag);
+		
 		try {
 			project.save();
 	    	msg = Messages.get("project.create.succeed");
@@ -102,21 +107,12 @@ public class Application extends Controller {
         	ProjectRequest projectRequest = new ProjectRequest();
         	projectRequest.setId(project.getId());
         	projectRequest.setName(project.getName());
-        	Date date = project.getDate();
-//    		String DATE_PATTERN = "yyyy/MM/dd";
-//          SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-//          String dateStr = "";
-//          try {
-//              // Stringに変換
-//              dateStr = sdf.format(date);
-//          } catch (Exception e) {
-//              // Stringに変換出来なかったらnullを返す
-//          	dateStr = null;
-//          }
+        	Date closingDate = project.getClosing_date();
+
         	SimpleDateFormat sdf = new SimpleDateFormat(CommonUtil.DATE_PATTERN);
         	String dateStr = "";
         	try {
-        		dateStr = sdf.format(date);
+        		dateStr = sdf.format(closingDate);
         	}catch (Exception e) {
 				// TODO: handle exception
 			}

@@ -30,7 +30,7 @@ public class NewProjectForm {
 	 * 期日
 	 */
 	@Required
-	private Date date;
+	private Date closingDate;
 	
 	/**
 	 * 進捗度
@@ -56,12 +56,12 @@ public class NewProjectForm {
 		this.explanation = explanation;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getClosingDate() {
+		return closingDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setClosingDate(Date closingDate) {
+		this.closingDate = closingDate;
 	}
 
 	public Double getProgressMeter() {

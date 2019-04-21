@@ -25,8 +25,9 @@ h1 {
 	margin-left: 10px;
 	margin-bottom: 15px; 
 }
-.non-progress, .non-progress-header{
-	background-color: #f9f7f5;
+.non-progress{
+	width: 300px;
+	height: 550px;
 }
 
 .non-progress-header{
@@ -35,28 +36,51 @@ h1 {
 	background:linear-gradient(180deg,#4dabff 0%,#4dabff 25%,#f9f7f5 25%,#f9f7f5 100%);
 	border-radius: 8px;
 }
+
+.non-progress, .non-progress-header{
+	background-color: #f9f7f5;
+}
+
+
 .task-header{
 	padding: 15px 20px 50px;
 } 
 
 #exampleTextarea{
     margin: 5px 15px 15px;
-    width: 290px;
+    width: 90%;
 }
 
-#cancel-task-button{
-	width: 210px;
-    margin: 0 0 0 auto;
-    display: inline;
-    
+.task-buttons{
+    width: 80%;
+    margin: 0 0 0 35%;
 }
 
 #output-add-button, #cancel-button{
-    width: 100px;
+    width: 35%;
 }
 
+.addButton{
+	width: 97%;
+}
 .shadow-sm-original {
 	max-width: 18rem;
     /* -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.125) !important; */
     box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.2) !important; /* 影の濃さ */
+}
+
+/* スクロールバー修正 */
+div::-webkit-scrollbar{
+  width: 6px;
+}
+div::-webkit-scrollbar-track{
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset 0 0 2px #777; 
+}
+div::-webkit-scrollbar-thumb{
+  background: #aaa;
+  border-radius: 10px;
+  box-shadow: none;
 }

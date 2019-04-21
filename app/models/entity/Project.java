@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.avaje.ebean.Model;
 
 @Entity
-@Table(name="project")
+@Table(name="projects")
 public class Project extends Model{
 	
 	/**
@@ -30,7 +30,7 @@ public class Project extends Model{
 	/**
 	 * 期日
 	 */
-	public Date date;
+	public Date closing_date;
 	
 	/**
 	 * 進捗度
@@ -72,12 +72,12 @@ public class Project extends Model{
 		this.explanation = explanation;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getClosing_date() {
+		return closing_date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setClosing_date(Date closing_date) {
+		this.closing_date = closing_date;
 	}
 
 	public Double getProgressMeter() {
@@ -98,9 +98,15 @@ public class Project extends Model{
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", name=" + name + ", explanation=" + explanation + ", date=" + date
-				+ ", progressMeter=" + progressMeter + ", finishFlag=" + finishFlag + "]";
+		return "Project [id=" + id + ", name=" + name + ", explanation=" + explanation + ", closing_date="
+				+ closing_date + ", progressMeter=" + progressMeter + ", finishFlag=" + finishFlag + "]";
 	}
+
+	
+
+
+
+
 
 
 
