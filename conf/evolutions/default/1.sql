@@ -12,14 +12,14 @@ create table message (
   constraint pk_message primary key (id))
 ;
 
-create table project (
+create table projects (
   id                        bigserial not null,
   name                      varchar(255),
   explanation               varchar(255),
-  date                      timestamp,
+  closing_date              timestamp,
   progress_meter            float,
   finish_flag               varchar(255),
-  constraint pk_project primary key (id))
+  constraint pk_projects primary key (id))
 ;
 
 
@@ -29,5 +29,5 @@ create table project (
 
 drop table if exists message cascade;
 
-drop table if exists project cascade;
+drop table if exists projects cascade;
 
