@@ -20,15 +20,17 @@
 			<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
 			<div class="non-progress-header">@projectRequest.name</div>
 
-			<div id="new-task">
-				<input type="textarea" class="form-control" id="exampleTextarea" rows="2" placeholder="新しいタスク名" style="display: none">
-			</div>
-			<div class="task-buttons">
-	  			<button class="btn btn-primary" id="output-add-button" style="display:none">追加</button>
-	 			<button class="btn btn-secondary" id="cancel-button" style="display: none">キャンセル</button>
-			</div>
-			<div class="task-button" id ="add-task">
-				<button type="button" class="btn btn-secondary btn-lg addButton" > ＋ タスクの追加 </button>
+			<div class="conversion">
+				<div id="new-task">
+					<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+				</div>
+				<div class="task-buttons">
+		  			<button class="btn btn-primary" id="output-add-button" style="display:none">追加</button>
+		 			<button class="btn btn-secondary" id="cancel-button" style="display: none">キャンセル</button>
+				</div>
+				<div class="task-button" id ="add-task1">
+					<button type="button" class="btn btn-secondary btn-lg addButton" > ＋ タスクの追加 </button>
+				</div>
 			</div>
 			<div style="height:400px;padding:10px;overflow:auto;">
 				<div class="box__list-task" id = "task-list">
@@ -69,8 +71,8 @@
 
 			<div id="new-task"></div>
 			<div id="cancel-task-button"></div>
-			<div class="task-button" id ="add-task">
-				<button type="button" class="btn btn-secondary btn-lg" onclick="clickBtn3()"> ＋ タスクの追加 </button>
+			<div class="task-button" id ="add-task2">
+				<button type="button" class="btn btn-secondary btn-lg addButton"> ＋ タスクの追加 </button>
 			</div>
 			<div style="height:400px;padding:10px;overflow:auto;">
 				<div class="box__list-task" id = "task-list">
@@ -110,31 +112,47 @@
 
 <script>
 $(function(){
-    $('.addButton').click(function(){
-    	if($(this).css('display') != 'none'){
-    		$(this).hide();				//①
-    		$('.task-button').hide();	//②　①と②はセットで隠す
-    		$('#exampleTextarea').show();
-    		$('#output-add-button').show();
-    		$('#cancel-button').show();
-    	}
+    $('.addButton').click(function($elem){
+    	
+    	// 押下した要素を取得
+    	var elem = $elem.target;
+    	// 押下した要素の親の親要素(class="conversion")を取得
+    	var conversion = $(elem).parents('div').find('.conversion');
+    	// 押下したボタンの要素を非表示
+    	$(elem).toggle();
+    	// テキストフィールドを表示
+    	$(conversion).children().find('#exampleTextarea').toggle();
+    	// 追加ボタン表示
+    	$(conversion).children().find('#output-add-button').toggle();
+		// キャンセルボタン表示    	
+    	$(conversion).children().find('#cancel-button').toggle();
+
     });
     
-    $('#cancel-button').click(function(){
-    	if($('.addButton').css('display') == 'none'){
-    		$(this).hide();
-    		$('#output-add-button').hide();
-    		$('#exampleTextarea').hide();
-    		$('.task-button').show();	
-    		$('.addButton').show();				
-    	}
+    $('#cancel-button').click(function($elem){
+    	
+    	// 押下した要素(キャンセルボタン)を取得
+    	var elem = $elem.target;
+    	// 押下した要素の親の親要素(class="conversion")を取得
+    	var conversion = $(elem).parents('div').find('.conversion');
+    	// 押下したボタン(キャンセルボタン)を非表示
+    	$(elem).toggle();
+    	// 追加ボタン非表示
+    	$(conversion).children().find('#output-add-button').toggle();
+    	// テキストフィールドを非表示
+    	$(conversion).children().find('#exampleTextarea').toggle();
+		// ＋タスクの追加ボタン表示    	
+    	$(conversion).children().find('.addButton').toggle();
+    	
+
     });
     
 });
  
 </script>
 
-
+<!-- $($($elem.target).parents('div')[1]).find('#new-task').children().toggle();
+ -->
 		
 
 }
