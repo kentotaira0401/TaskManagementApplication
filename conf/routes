@@ -17,3 +17,6 @@ GET		/create/newProject			controllers.CreateNew.createNewProject()
 
 # detailProject
 GET		/detail/project/:id			controllers.Detail.project(id: Long)
+
+# sample
+GET		/sample/sample				controllers.Sample.sample()
