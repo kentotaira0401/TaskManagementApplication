@@ -22,6 +22,19 @@ create table projects (
   constraint pk_projects primary key (id))
 ;
 
+create table tasks (
+  id                        bigserial not null,
+  project_id                bigint,
+  name                      varchar(255),
+  explanation               varchar(255),
+  start_date                timestamp,
+  closing_date              timestamp,
+  staff_id                  integer,
+  category_id               integer,
+  finish_flag               integer,
+  constraint pk_tasks primary key (id))
+;
+
 
 
 
@@ -30,4 +43,6 @@ create table projects (
 drop table if exists message cascade;
 
 drop table if exists projects cascade;
+
+drop table if exists tasks cascade;
 
