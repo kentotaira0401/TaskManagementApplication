@@ -36,6 +36,9 @@ task.create.new 		= タスク新規作成
 #			　タスク　				 #
 ##################################
 task.progress.meter.yet		 = 未進行
-task.progress.meter.harf.way = 進行中
+task.progress.meter.harfway = 進行中
 task.progress.meter.finished = 完了
 task.sidebar.new.project 	 = 新規作成
+task.plus.add.button		 = ＋ タスクの追加 
+task.add.button				 = 追加
+task.cancel.button			 = キャンセル

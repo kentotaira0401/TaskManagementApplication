@@ -40,6 +40,36 @@ public class CommonUtil {
             return null;
         }
     }
+    
+    /**
+     * Stringの数値データをLongに変換する 変換出来なかった場合にはnullを返す
+     *
+     * @param str
+     * @return
+     */
+    public static Long getStr2Long(String str) {
+        try {
+            // intに変換
+            return Long.parseLong(str);
+        } catch (Exception e) {
+            // intに変換出来なかったらrtnを返す
+            return null;
+        }
+    }
+    
+    /**
+     * LongのデータをStringに変換する 変換出来なかった場合にはnullを返す
+     *
+     * @param i
+     * @return
+     */
+    public static String getLong2Str(Long i) {
+        try {
+            return Long.toString(i);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
 
 

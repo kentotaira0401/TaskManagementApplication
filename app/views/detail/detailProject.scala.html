@@ -47,134 +47,183 @@
 				
 				<table>
 					<tr>
-					<td style="padding-right: 20px;">
-					<!-- ここからボックス作成 -->
-						<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
-						<div class="non-progress-header">@Messages.get("task.progress.meter.yet")</div>
-			
-						<div class="conversion">
-							<div id="new-task">
-								<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
-							</div>
-							<div class="task-buttons">
-					  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none">追加</button>
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								  <div class="modal-dialog" role="document">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								          <span aria-hidden="true">&times;</span>
-								        </button>
-								      </div>
-								      <div class="modal-body">
-								        ...
-								      </div>
-								      <div class="modal-footer">
-								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								        <button type="button" class="btn btn-primary">Save changes</button>
-								      </div>
-								    </div>
-								  </div>
+						<!-- ここから未進行ボックス作成 -->
+						<td class="task-box">
+							<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
+								<div class="non-progress-header">
+									@Messages.get("task.progress.meter.yet")
 								</div>
-
-								<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">キャンセル</button>
-							</div>
-							<div class="task-button" id ="add-task1">
-								<button type="button" class="btn btn-secondary btn-lg addButton" > ＋ タスクの追加 </button>
-							</div>
-						</div>
-						<div style="height:400px;padding:10px;overflow:auto;">
-							<!-- タスクの数だけ回す -->
-							@if(taskList.size() != 0){
-								@for(task <- taskList){
-									<!-- 未進行のタスクのみ表示 -->
-										<div class="box__list-task" id = "task-list" data-toggle="modal" data-target="#myModal">
-											<div class="box shadow-sm-original card border-light mb-2 inside-project">
-												<div class="task-header">@task.name</div>
-												<input type="hidden" name="task-id" value="@task.id"/>
+					
+								<div class="conversion">
+									<div id="new-task">
+										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+									</div>
+									<div class="task-buttons">
+<!-- 							  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none"> -->
+							  			<button class="btn btn-primary" id="output-add-button" style="display:none">
+							  				@Messages.get("task.add.button")
+							  			</button>
+										<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">
+											@Messages.get("task.cancel.button")
+										</button>
+									</div>
+									<div class="task-button" id ="add-task1">
+										<button type="button" class="btn btn-secondary btn-lg addButton" >
+											@Messages.get("task.plus.add.button") 
+										</button>
+									</div>
+								</div>
+								<div style="height:400px;padding:10px;overflow:auto;">
+									<!-- タスクの数だけ回す -->
+									@for(task <- taskList){
+										@if(task.finish_flag == -1){
+											<!-- 未進行のタスクのみ表示 -->
+											<div class="box__list-task" id = "task-list" data-toggle="modal" data-target="#myModal">
+												<div class="box shadow-sm-original card border-light mb-2 inside-project">
+													<div class="task-header">@task.name</div>
+													<input type="hidden" name="task-id" value="@task.id"/>
+												</div>
 											</div>
-										</div>
-								}
-							}
-							<!-- タスク押下時表示モーダル -->
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							        <h4 class="modal-title" id="myModalLabel">Lorem ipsum</h4>
-							      </div>
-							      <div class="modal-body">
-							        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							      </div>
-							    </div>
-							  </div>
-							</div> 
-						</div>
-			
-						</div>
+										}
+									}
+								</div>
+							</div>
 						</td>
 						
 						<!-- ここから進行中タスク -->
-						<td  style="padding-right: 20px;">
-						<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
-						<div class="non-progress-header">@Messages.get("task.progress.meter.harf.way")</div>
-			
-						<div class="conversion">
-							<div id="new-task">
-								<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
-							</div>
-							<div class="task-buttons">
-					  			<button class="btn btn-primary" id="output-add-button" style="display:none">追加</button>
-					 			<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">キャンセル</button>
-							</div>
-							<div class="task-button" id ="add-task1">
-								<button type="button" class="btn btn-secondary btn-lg addButton" > ＋ タスクの追加 </button>
-							</div>
-						</div>
-						<div style="height:400px;padding:10px;overflow:auto;">
-							<div class="box__list-task" id = "task-list">
-								<div class="box shadow-sm-original card border-light mb-2 inside-project">
-									<div class="task-header">@projectRequest.name</div>
+						<td class="task-box">
+							<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
+								<div class="non-progress-header" id="task-harfway-header">
+									@Messages.get("task.progress.meter.harfway")
+								</div>
+					
+								<div class="conversion">
+									<div id="new-task">
+										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+									</div>
+									<div class="task-buttons">
+							  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none">
+							  				@Messages.get("task.add.button")
+							  			</button>
+										<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">
+											@Messages.get("task.cancel.button")
+										</button>
+									</div>
+									<div class="task-button" id ="add-task1">
+										<button type="button" class="btn btn-secondary btn-lg addButton" >
+											@Messages.get("task.plus.add.button") 
+										</button>
+									</div>
+								</div>
+								<div style="height:400px;padding:10px;overflow:auto;">
+									<!-- タスクの数だけ回す -->
+									@for(task <- taskList){
+										@if(task.finish_flag == 0){
+											<!-- 未進行のタスクのみ表示 -->
+											<div class="box__list-task" id = "task-list" data-toggle="modal" data-target="#myModal">
+												<div class="box shadow-sm-original card border-light mb-2 inside-project">
+													<div class="task-header">@task.name</div>
+													<input type="hidden" name="task-id" value="@task.id"/>
+												</div>
+											</div>
+										}
+									}
 								</div>
 							</div>
-							<div class="box__list-task" id = "task-list">
-								<div class="box shadow-sm-original card border-light mb-2 inside-project">
-									<div class="task-header">@projectRequest.name</div>
-								</div>
-							</div>
-											<div class="box__list-task" id = "task-list">
-								<div class="box shadow-sm-original card border-light mb-2 inside-project">
-									<div class="task-header">@projectRequest.name</div>
-								</div>
-							</div>
-											<div class="box__list-task" id = "task-list">
-								<div class="box shadow-sm-original card border-light mb-2 inside-project">
-									<div class="task-header">@projectRequest.name</div>
-								</div>
-							</div>
-											<div class="box__list-task" id = "task-list">
-								<div class="box shadow-sm-original card border-light mb-2 inside-project">
-									<div class="task-header">@projectRequest.name</div>
-								</div>
-							</div>
-						</div>
-			
-						</div>
 						</td>
-						</tr>
+							
+						<!-- ここから終了タスク -->
+						<td class="task-box">
+							<div class="box card border-light mb-3 non-progress" style="max-width: 20rem;">
+								<div class="non-progress-header" id="task-finished-header">
+									@Messages.get("task.progress.meter.finished")
+								</div>
+					
+								<div class="conversion">
+									<div id="new-task">
+										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+									</div>
+									<div class="task-buttons">
+							  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none">
+							  				@Messages.get("task.add.button")
+							  			</button>
+										<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">
+											@Messages.get("task.cancel.button")
+										</button>
+									</div>
+									<div class="task-button" id ="add-task1">
+										<button type="button" class="btn btn-secondary btn-lg addButton" >
+											@Messages.get("task.plus.add.button") 
+										</button>
+									</div>
+								</div>
+								<div style="height:400px;padding:10px;overflow:auto;">
+									<!-- タスクの数だけ回す -->
+									@for(task <- taskList){
+										@if(task.finish_flag == 1){
+											<!-- 未進行のタスクのみ表示 -->
+											<div class="box__list-task" id = "task-list" data-toggle="modal" data-target="#myModal">
+												<div class="box shadow-sm-original card border-light mb-2 inside-project">
+													<div class="task-header">@task.name</div>
+													<input type="hidden" name="task-id" value="@task.id"/>
+												</div>
+											</div>
+										}
+									}
+								</div>
+							</div>
+						</td>
+					</tr>
 				</table>
 		    </div>
 		</div>
     </div>
 </div><!-- container-fluid -->
+
+									
+	<!-- 追加ボタン押下時Modal --><!-- いらない？？笑 -->
+<!-- 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!-- 	  <div class="modal-dialog" role="document"> -->
+<!-- 	    <div class="modal-content"> -->
+<!-- 	      <div class="modal-header"> -->
+<!-- 	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+<!-- 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 	          <span aria-hidden="true">&times;</span> -->
+<!-- 	        </button> -->
+<!-- 	      </div> -->
+<!-- 	      <div class="modal-body"> -->
+<!-- 	        ... -->
+<!-- 	      </div> -->
+<!-- 	      <div class="modal-footer"> -->
+<!-- 	        <button type="button" class="btn btn-primary">Save changes</button> -->
+<!-- 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+<!-- 	      </div> -->
+<!-- 	    </div> -->
+<!-- 	  </div> -->
+<!-- 	</div> -->
+
+	<!-- タスクフィールド押下時 表示モーダル -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="myModalLabel">
+	        	
+	        	<span id="modal-title-text"></span>
+	        </h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        	<span id="modal-body-text"></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </body>
 
 <script>
@@ -218,8 +267,31 @@ $(function(){
     $('.box__list-task').click(function($elem){
     	
     	var elem = $elem.target;
+    	console.log(elem.nextElementSibling);
+    	/* ここで選択したタスク内容をajaxで表示する */
+    	var taskId = $(elem.nextElementSibling).val();
+    	console.log(taskId);
     	
-    	
+/*     	$('#modal-body-text').text(taskId);
+    	$('#modal-title-text').text(projectId); */
+    	  $.ajax({
+    	        type: 'post',
+    	        url: '@routes.Detail.sendParam',
+    	        data: {'param1':taskId},
+    	        cache : false,
+    	        timeout: 20000
+    	    }).done(function(data) {
+
+                var taskObj = $.parseJSON(data);
+                
+            	$('#modal-title-text').text(taskObj.name);
+                $('#modal-body-text').text(taskObj.explanation);
+                
+    	    }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+    	    	ajaxFailedMessage();
+    	  }).always(function(XMLHttpRequest, textStatus) {
+
+    	  });
     	
     });
     

@@ -1,15 +1,10 @@
 body{
 	font-size: 12pt;
-/* 	color: #006600; */
-/*  padding-top: 120px; */
 	padding-bottom: 120px;
 	font-family: "Meiryo";
 }
 
-/* h1{ */
-/* 	font-size: 18pt; */
-/* 	font-weight: bold; */
-/* 	background-color: #66aa66; */
-/* 	color: #ccffcc; */
-/* 	padding: 3px; */
-/* } */
+.navbar{
+	padding: 0.5rem 1.5rem;
+	max-height: 100%;
+}

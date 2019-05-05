@@ -17,6 +17,11 @@ GET		/create/newProject			controllers.CreateNew.createNewProject()
 
 # detailProject
 GET		/detail/project/:id			controllers.Detail.project(id: Long)
+POST	/detail/project/sendParam	controllers.Detail.sendParam()
+
+
+
+
 
 # sample
 GET		/sample/sample				controllers.Sample.sample()

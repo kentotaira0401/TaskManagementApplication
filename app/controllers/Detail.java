@@ -2,11 +2,16 @@ package controllers;
 
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import models.entity.Project;
 import models.entity.Task;
 import models.request.ProjectRequest;
+import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.CommonUtil;
 
 public class Detail extends Controller{
 
@@ -29,4 +34,23 @@ public class Detail extends Controller{
 		return ok(views.html.detail.detailProject.render(projectRequest,taskList));
 	}
 	
+	
+	public Result sendParam(){
+		
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		Long taskId = CommonUtil.getStr2Long(form.data().get("param1"));
+		
+		Task taskObj = Task.find.byId(taskId);
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    String json ="";
+		try {
+			json = mapper.writeValueAsString(taskObj);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return ok(json);
+	}
 }

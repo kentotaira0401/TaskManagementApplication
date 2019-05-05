@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-h1 {
-	padding-bottom: 20px;
+td.task-box {
+	padding-right: 20px;
 }
 .flex-side-container{
 	display:-webkit-flex;
@@ -9,11 +9,9 @@ h1 {
 	width:100%;
 }
 .sidebar{
-	max-width:20%;
+	max-width:100%;
 	width: 90px;
 	text-align: center;
-/* 	padding-right:0; */
-/* 	padding-left:0; */
 }
 li.active{
 	width: 100%;
@@ -31,7 +29,6 @@ li.active{
     width: 40px;
     height: 40px;
     position: relative;
-/*     margin-bottom: 8px; */
     opacity: .6;
     border-radius: 8px;
     border: solid 1px #efefef;
@@ -97,6 +94,9 @@ i.icon-plus{
 	color: #98d7ff;
 	font-size: 0.7rem;
 }
+.modal-btn{
+	width: auto;
+}
 .task-button{
 	margin-top: 20px;
 	margin-left: 10px;
@@ -111,9 +111,15 @@ i.icon-plus{
 	padding-top: 18px;
 	padding-left: 10px;
 	background:linear-gradient(180deg,#4dabff 0%,#4dabff 25%,#f9f7f5 25%,#f9f7f5 100%);
-	border-radius: 10px;
+	border-radius: 8px;
 }
 
+.non-progress-header#task-harfway-header{
+	background:linear-gradient(180deg,#36C398 0%,#36C398 25%,#f9f7f5 25%,#f9f7f5 100%);
+}
+.non-progress-header#task-finished-header{
+	background:linear-gradient(180deg,#FC78B9 0%,#FC78B9 25%,#f9f7f5 25%,#f9f7f5 100%);
+}
 .non-progress, .non-progress-header{
 	background-color: #f9f7f5;
 }
@@ -148,16 +154,20 @@ i.icon-plus{
 
 /* スクロールバー修正 */
 div::-webkit-scrollbar{
-  width: 6px;
+	width: 6px;
 }
 div::-webkit-scrollbar-track{
-  background: #fff;
-  border: none;
-  border-radius: 10px;
-  box-shadow: inset 0 0 2px #777; 
+	background: #fff;
+	border: none;
+	border-radius: 10px;
+	box-shadow: inset 0 0 2px #777; 
 }
 div::-webkit-scrollbar-thumb{
-  background: #aaa;
-  border-radius: 10px;
-  box-shadow: none;
+	background: #aaa;
+	border-radius: 10px;
+	box-shadow: none;
+}
+
+.modal-content{
+	border-radius: 0.75rem;
 }
