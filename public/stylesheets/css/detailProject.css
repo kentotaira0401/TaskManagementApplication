@@ -86,6 +86,12 @@ i.icon-plus{
 	margin-bottom: 15px;
 	cursor: pointer;
 }
+.task-period{
+	font-size: x-small;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    color: #9b9b9b;
+}
 .btn-primary{
 	margin-right: 5px;
 }
@@ -127,6 +133,7 @@ i.icon-plus{
 
 .task-header{
 	padding: 15px 20px 50px;
+	max-height: 50px;
 } 
 
 #exampleTextarea{
@@ -137,9 +144,10 @@ i.icon-plus{
 .task-buttons{
     width: 80%;
     margin: 0 0 0 35%;
+    display: none;
 }
 
-#output-add-button, #cancel-button{
+.output-add-button, #cancel-button{
     width: 35%;
 }
 

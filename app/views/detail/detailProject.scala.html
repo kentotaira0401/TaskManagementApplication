@@ -1,4 +1,4 @@
-@(projectRequest:models.request.ProjectRequest, taskList:List[models.entity.Task])
+@(projectRequest:models.request.ProjectRequest, taskList:List[models.request.TaskRequest])
 @import play.i18n._
 
 @main("detail-page") {
@@ -59,11 +59,10 @@
 										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
 									</div>
 									<div class="task-buttons">
-<!-- 							  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none"> -->
-							  			<button class="btn btn-primary" id="output-add-button" style="display:none">
+							  			<button class="btn btn-primary output-add-button">
 							  				@Messages.get("task.add.button")
 							  			</button>
-										<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">
+										<button class="btn btn-secondary cancel-button" id="cancel-button">
 											@Messages.get("task.cancel.button")
 										</button>
 									</div>
@@ -82,6 +81,7 @@
 												<div class="box shadow-sm-original card border-light mb-2 inside-project">
 													<div class="task-header">@task.name</div>
 													<input type="hidden" name="task-id" value="@task.id"/>
+													<div class="task-period">@task.start_date - @task.closing_date</div>
 												</div>
 											</div>
 										}
@@ -102,10 +102,10 @@
 										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
 									</div>
 									<div class="task-buttons">
-							  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none">
+							  			<button class="btn btn-primary output-add-button">
 							  				@Messages.get("task.add.button")
 							  			</button>
-										<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">
+										<button class="btn btn-secondary cancel-button" id="cancel-button">
 											@Messages.get("task.cancel.button")
 										</button>
 									</div>
@@ -124,6 +124,7 @@
 												<div class="box shadow-sm-original card border-light mb-2 inside-project">
 													<div class="task-header">@task.name</div>
 													<input type="hidden" name="task-id" value="@task.id"/>
+													<div class="task-period">@task.start_date - @task.closing_date</div>
 												</div>
 											</div>
 										}
@@ -144,10 +145,10 @@
 										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
 									</div>
 									<div class="task-buttons">
-							  			<button class="btn btn-primary" id="output-add-button" data-toggle="modal" data-target="#exampleModal" style="display:none">
+							  			<button class="btn btn-primary output-add-button">
 							  				@Messages.get("task.add.button")
 							  			</button>
-										<button class="btn btn-secondary cancel-button" id="cancel-button" style="display: none">
+										<button class="btn btn-secondary cancel-button" id="cancel-button">
 											@Messages.get("task.cancel.button")
 										</button>
 									</div>
@@ -166,6 +167,7 @@
 												<div class="box shadow-sm-original card border-light mb-2 inside-project">
 													<div class="task-header">@task.name</div>
 													<input type="hidden" name="task-id" value="@task.id"/>
+													<div class="task-period">@task.start_date - @task.closing_date</div>
 												</div>
 											</div>
 										}
@@ -180,49 +182,47 @@
     </div>
 </div><!-- container-fluid -->
 
-									
-	<!-- 追加ボタン押下時Modal --><!-- いらない？？笑 -->
-<!-- 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 	  <div class="modal-dialog" role="document"> -->
-<!-- 	    <div class="modal-content"> -->
-<!-- 	      <div class="modal-header"> -->
-<!-- 	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-<!-- 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 	          <span aria-hidden="true">&times;</span> -->
-<!-- 	        </button> -->
-<!-- 	      </div> -->
-<!-- 	      <div class="modal-body"> -->
-<!-- 	        ... -->
-<!-- 	      </div> -->
-<!-- 	      <div class="modal-footer"> -->
-<!-- 	        <button type="button" class="btn btn-primary">Save changes</button> -->
-<!-- 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-<!-- 	      </div> -->
-<!-- 	    </div> -->
-<!-- 	  </div> -->
-<!-- 	</div> -->
-
 	<!-- タスクフィールド押下時 表示モーダル -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h4 class="modal-title" id="myModalLabel">
-	        	
-	        	<span id="modal-title-text"></span>
-	        </h4>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        	<span id="modal-body-text"></span>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
+	    <div class="modal-dialog" role="document">
+	       <div class="modal-content">
+	    
+		      <!-- header部 -->
+		      <div class="modal-header">
+					<table style="width: 100%;">
+						<tbody>
+							<tr>
+								<td>
+									<h4 class="modal-title" id="myModalLabel" style="display: -webkit-inline-box;">
+										<span id="modal-title-text"></span>
+									</h4>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close" style="display: inline;">
+										<span aria-hidden="true">×</span>
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<span id="modal-body-text"></span>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			  </div>
+		      <!-- body部 -->
+		      <div class="modal-body">
+		      </div>
+		      
+		      <!-- footer部 -->
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+		      </div>
+	      
+			</div>
+		</div>
 	</div>
 </body>
 
@@ -240,67 +240,77 @@ $(function(){
     	// テキストフィールドを表示
     	$(conversion).children().find('#exampleTextarea').toggle();
     	// 追加ボタン表示
-    	$(conversion).children().find('#output-add-button').toggle();
+    	$(conversion).children('.task-buttons').toggle();
 		// キャンセルボタン表示    	
-    	$(conversion).children().find('#cancel-button').toggle();
 
     });
+    
+    $('.output-add-button').click(function($elem){
+    	/* ボタンを元に戻す */
+    	toggleReturn($elem);
+    })
     
     $('.cancel-button').click(function($elem){
-    	
-    	// 押下した要素(キャンセルボタン)を取得
-    	var elem = $elem.target;
-    	// 押下した要素の親の親要素(class="conversion")を取得
-    	var conversion = $(elem).parents('div.conversion');
-    	// 押下したボタン(キャンセルボタン)を非表示
-    	$(elem).toggle();
-    	// 追加ボタン非表示
-    	$(conversion).children().find('#output-add-button').toggle();
-    	// テキストフィールドを非表示
-    	$(conversion).children().find('#exampleTextarea').toggle();
-		// ＋タスクの追加ボタン表示    	
-    	$(conversion).children().find('.addButton').toggle();
-    	
-
+    	/* ボタンを元に戻す */
+    	toggleReturn($elem);
     });
     
+    
     $('.box__list-task').click(function($elem){
-    	
-    	var elem = $elem.target;
-    	console.log(elem.nextElementSibling);
-    	/* ここで選択したタスク内容をajaxで表示する */
-    	var taskId = $(elem.nextElementSibling).val();
-    	console.log(taskId);
-    	
-/*     	$('#modal-body-text').text(taskId);
-    	$('#modal-title-text').text(projectId); */
-    	  $.ajax({
-    	        type: 'post',
-    	        url: '@routes.Detail.sendParam',
-    	        data: {'param1':taskId},
-    	        cache : false,
-    	        timeout: 20000
-    	    }).done(function(data) {
 
-                var taskObj = $.parseJSON(data);
-                
-            	$('#modal-title-text').text(taskObj.name);
-                $('#modal-body-text').text(taskObj.explanation);
-                
-    	    }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
-    	    	ajaxFailedMessage();
-    	  }).always(function(XMLHttpRequest, textStatus) {
-
-    	  });
-    	
+    	/* タスク表示 */
+    	sendToModal($elem);
     });
+
+    
+/////// 以下自作関数  ////////////////////////////////
+ 
+ 
+/* ボタンを元に戻す */
+function toggleReturn($elem){
+	
+	// 押下した要素(キャンセルボタン)を取得
+	var elem = $elem.target;
+	// 押下した要素の親の親要素(class="conversion")を取得
+	var conversion = $(elem).parents('div.conversion');
+	// 押下したボタンの親要素を非表示
+	$(elem.parentElement).toggle();
+	// テキストフィールドを非表示
+	$(conversion).children().find('#exampleTextarea').toggle();
+	// ＋タスクの追加ボタン表示    	
+	$(conversion).children().find('.addButton').toggle();
+}
+
+/* モーダルで表示するtaskのIDを受け取りそれを元に表示 */
+function sendToModal($elem){
+	
+	var elem = $elem.target;
+	/* ここで選択したタスク内容をajaxで表示する */
+	var taskId = $(elem.nextElementSibling).val();
+	
+	  $.ajax({
+	        type: 'post',
+	        url: '@routes.Detail.sendParam',
+	        data: {'param1':taskId},
+	        cache : false,
+	        timeout: 20000
+	    }).done(function(data) {
+
+          	var taskObj = $.parseJSON(data);
+          
+			$('#modal-title-text').text(taskObj.name);
+        	$('#modal-body-text').text(taskObj.explanation);
+          
+	    }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+	    	ajaxFailedMessage();
+	  }).always(function(XMLHttpRequest, textStatus) {
+
+	  });
+}
     
 });
  
 </script>
-
-<!-- $($($elem.target).parents('div')[1]).find('#new-task').children().toggle();
- -->
 		
 
 }

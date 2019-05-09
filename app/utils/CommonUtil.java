@@ -28,6 +28,9 @@ public class CommonUtil {
     public static Date getStr2Date(String str) {
         return getStr2Date(str, DATE_PATTERN2);
     }
+    public static Date getStr2Date1(String str) {
+        return getStr2Date(str, DATE_PATTERN);
+    }
     
     public static Date getStr2Date(String str, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);

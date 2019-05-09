@@ -1,17 +1,10 @@
-package models.entity;
+package models.request;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-import com.avaje.ebean.Model;
-
-@Entity
-@Table(name="tasks")
-public class Task extends Model{
+public class TaskRequest {
 
 	/**
 	 * ID
@@ -39,12 +32,12 @@ public class Task extends Model{
 	/**
 	 * 開始日
 	 */
-	public Date start_date;
+	public String start_date;
 	
 	/**
 	 * 締切日
 	 */
-	public Date closing_date;
+	public String closing_date;
 	
 	/**
 	 * スタッフID
@@ -61,11 +54,13 @@ public class Task extends Model{
 	 */
 	public Integer finish_flag;
 
-	
-	public static Find<Long,Task> find = new Find<Long,Task>(){
-		
-	};
-	
+	@Override
+	public String toString() {
+		return "TaskRequest [id=" + id + ", project_id=" + project_id + ", name=" + name + ", explanation="
+				+ explanation + ", start_date=" + start_date + ", closing_date=" + closing_date + ", staff_id="
+				+ staff_id + ", category_id=" + category_id + ", finish_flag=" + finish_flag + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -98,21 +93,19 @@ public class Task extends Model{
 		this.explanation = explanation;
 	}
 
-
-
-	public Date getStart_date() {
+	public String getStart_date() {
 		return start_date;
 	}
 
-	public void setStart_date(Date start_date) {
+	public void setStart_date(String start_date) {
 		this.start_date = start_date;
 	}
 
-	public Date getClosing_date() {
+	public String getClosing_date() {
 		return closing_date;
 	}
 
-	public void setClosing_date(Date closing_date) {
+	public void setClosing_date(String closing_date) {
 		this.closing_date = closing_date;
 	}
 
@@ -139,8 +132,7 @@ public class Task extends Model{
 	public void setFinish_flag(Integer finish_flag) {
 		this.finish_flag = finish_flag;
 	}
-
-
+	
 	
 	
 }
