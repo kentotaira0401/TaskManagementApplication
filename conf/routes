@@ -3,25 +3,25 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           		controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file               		controllers.Assets.versioned(path="/public", file: Asset)
 
 # Application
-POST    /send                       controllers.Application.send()
-POST	/createdProject				controllers.Application.createdProject()
+POST    /send                       		controllers.Application.send()
+POST	/createdProject						controllers.Application.createdProject()
 
 # createProject
-GET		/create/newProject			controllers.CreateNew.createNewProject()
+GET		/create/newProject					controllers.CreateNew.createNewProject()
 
 # detailProject
-GET		/detail/project/:id			controllers.Detail.project(id: Long)
-POST	/detail/project/sendParam	controllers.Detail.sendParam()
-
+GET		/detail/project/:id					controllers.Detail.project(id: Long)
+POST	/detail/project/sendParam			controllers.Detail.sendParam()
+POST	/detail/project/insertNewTask		controllers.Detail.insertNewTask()
 
 
 
 
 # sample
-GET		/sample/sample				controllers.Sample.sample()
+GET		/sample/sample						controllers.Sample.sample()

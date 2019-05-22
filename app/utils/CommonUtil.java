@@ -61,6 +61,22 @@ public class CommonUtil {
     }
     
     /**
+     * Stringの数値データをIntegerに変換する 変換出来なかった場合にはnullを返す
+     *
+     * @param str
+     * @return
+     */
+    public static Integer getStr2Int(String str) {
+        try {
+            // intに変換
+            return Integer.parseInt(str);
+        } catch (Exception e) {
+            // intに変換出来なかったらrtnを返す
+            return null;
+        }
+    }
+    
+    /**
      * LongのデータをStringに変換する 変換出来なかった場合にはnullを返す
      *
      * @param i

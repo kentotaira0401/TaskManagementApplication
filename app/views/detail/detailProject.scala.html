@@ -6,6 +6,11 @@
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.versioned("/stylesheets/css/detailProject.css")">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
+<!-- bootstrap-datepickerを読み込む -->
+<link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("/stylesheets/css/datepicker/bootstrap-datepicker.min.css")">
+<script type="text/javascript" src="@routes.Assets.versioned("/javascripts/datepicker/bootstrap-datepicker.min.js")"></script>
+<script type="text/javascript" src="@routes.Assets.versioned("/javascripts/datepicker/bootstrap-datepicker.ja.min.js")"></script>
+
 
 
 <body class style>
@@ -40,8 +45,25 @@
 			<!-- <h1>projectRequest.name</h1> --><!-- これはできなかった -->
 				<h2>
 					<img class="pro-image" src="@routes.Assets.versioned("/images/doraemon_1.jpg")" />
-					<span>@projectRequest.name</span>
+					<span id="project-name">@projectRequest.name</span>
 				</h2>
+				
+				<ul class="nav nav--links nav--icons nav--sublist nav--project-board">
+					<li class="nav-item nav-icons">
+					  <a class="nav-link" id="toggle-board" href="javascript: void(0);">
+					    <i class="far fa-clipboard"></i>
+					    <span class="nav-text">ボード</span>
+					  </a>
+					</li>
+					
+					<li class="nav-item nav-icons">
+					  <a class="nav-link active" id="toggle-chart" href="javascript: void(0);">
+					    <i class="fas fa-align-left"></i>
+					    <span class="nav-text">ガントチャート</span>
+					  </a>
+					</li>
+				</ul>
+				
 				<hr>
 				<!-- <h1>@{projectRequest.getName}pj</h1> -->
 				
@@ -56,7 +78,9 @@
 					
 								<div class="conversion">
 									<div id="new-task">
-										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+										<input type="text" class="form-control task-text" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+										<input type="hidden" id="project-id" value="@projectRequest.id"/>
+										<input type="hidden" id="finish-flag" value="-1"/>
 									</div>
 									<div class="task-buttons">
 							  			<button class="btn btn-primary output-add-button">
@@ -72,7 +96,7 @@
 										</button>
 									</div>
 								</div>
-								<div style="height:400px;padding:10px;overflow:auto;">
+								<div id="tasks-yet" style="height:400px;padding:10px;overflow:auto;">
 									<!-- タスクの数だけ回す -->
 									@for(task <- taskList){
 										@if(task.finish_flag == -1){
@@ -99,7 +123,8 @@
 					
 								<div class="conversion">
 									<div id="new-task">
-										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+										<input type="text" class="form-control task-text" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+										<input type="hidden" id="finish-flag" value="0"/>
 									</div>
 									<div class="task-buttons">
 							  			<button class="btn btn-primary output-add-button">
@@ -142,7 +167,8 @@
 					
 								<div class="conversion">
 									<div id="new-task">
-										<input type="text" class="form-control" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+										<input type="text" class="form-control task-text" id="exampleTextarea" placeholder="新しいタスク名" style="display: none">
+										<input type="hidden" id="finish-flag" value="1"/>
 									</div>
 									<div class="task-buttons">
 							  			<button class="btn btn-primary output-add-button">
@@ -184,22 +210,24 @@
 
 	<!-- タスクフィールド押下時 表示モーダル -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
+	    <div class="modal-dialog modal-lg" role="document">
 	       <div class="modal-content">
 	    
-		      <!-- header部 -->
-		      <div class="modal-header">
+				<!-- header部 -->
+				<div class="modal-header">
 					<table style="width: 100%;">
 						<tbody>
 							<tr>
 								<td>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close" id="modal-close">
+										<span class="closs-mark" aria-hidden="true">×</span>
+									</button>
+									<div class="taskdetail__header-status" id="task-list-info">#9 @Messages.get("task.progress.meter.yet")
+									</div>
 									<h4 class="modal-title" id="myModalLabel" style="display: -webkit-inline-box;">
 										<span id="modal-title-text"></span>
 									</h4>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close" style="display: inline;">
-										<span aria-hidden="true">×</span>
-									</button>
 								</td>
 							</tr>
 							<tr>
@@ -211,16 +239,53 @@
 							</tr>
 						</tbody>
 					</table>
-			  </div>
-		      <!-- body部 -->
-		      <div class="modal-body">
-		      </div>
-		      
-		      <!-- footer部 -->
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
-		      </div>
-	      
+				</div>
+				<!-- body部 -->
+				<div class="modal-body">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="start-date-class">
+								<i class="far fa-calendar"></i>
+								<span class="modal-span-class" id="start-date" >
+				                	<span class="start-date-text">開始日を追加</span>
+									<input type="text" class="form-control-sm start-date-text" id="start-date" style="display:none">			
+				              	</span>
+			              	</div>
+	              		</li>
+	              		<li class="list-group-item">
+							<div class="close-date-class">
+								<i class="far fa-calendar"></i>			
+								<span class="modal-span-class" id="close-date" >
+				                		締切日を追加
+				              	</span>
+			              	</div>
+	              		</li>
+	              		<li class="list-group-item">
+							<div class="responsible-class">
+								<i class="far fa-user"></i>			
+								<span class="modal-span-class" id="responsible-person" >
+				                		担当者を追加
+				              	</span>
+			              	</div>
+	              		</li>
+	              		<li class="list-group-item">
+							<div class="category-class">
+								<i class="far fa-bookmark"></i>			
+								<span class="modal-span-class" id="category" >
+				                		カテゴリー：指定なし
+				              	</span>
+			              	</div>
+	              		</li>              		
+					</ul>
+				</div>
+			      
+				<!-- footer部 -->
+				<div class="modal-footer">
+					<span class="who-make-date">
+					タスク作成： 2019年5月20日 17:46 作成者： kentotaira0401
+					</span>
+					<button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -229,6 +294,7 @@
 <script>
 $(function(){
 	
+	// 「タスクの追加」ボタンクリック処理
     $('.addButton').click(function($elem){
     	
     	// 押下した要素を取得
@@ -239,30 +305,61 @@ $(function(){
     	$(elem).toggle();
     	// テキストフィールドを表示
     	$(conversion).children().find('#exampleTextarea').toggle();
-    	// 追加ボタン表示
+    	// 追加ボタン表示・キャンセルボタン表示
     	$(conversion).children('.task-buttons').toggle();
-		// キャンセルボタン表示    	
-
+		// テキストエリアをクリア   	
+		$(conversion).children().find('#exampleTextarea').val("");
     });
     
+	// 「追加」ボタンクリック処理
     $('.output-add-button').click(function($elem){
+    	
+    	$('#errorCheck').remove();
+    	var elem = $elem.target;
+		var taskText = $(elem).parents().children().children('input.task-text');
+    	
+    	var taskName = $(taskText).val();
+    	
+    	//　新タスク名がからの時エラーメッセージ
+    	if("" == taskName){
+    		$(taskText).after('<div id="errorCheck">新しいタスク名を入力してください</div>');
+    		return false;
+    	}
+    	var projectId 	= $('#project-id').val();
+    	var finishFlag 	= $('#finish-flag').val();
+    	
+    	insertNewTask(taskName,projectId,finishFlag);
+    	
     	/* ボタンを元に戻す */
     	toggleReturn($elem);
     })
     
+    
+    // 「キャンセル」ボタンクリック処理
     $('.cancel-button').click(function($elem){
+    	$('#errorCheck').remove();
     	/* ボタンを元に戻す */
     	toggleReturn($elem);
     });
     
     
-    $('.box__list-task').click(function($elem){
-
+	// 「タスク」クリック処理
+	$(document).on("click", ".box__list-task", function ($elem) {
     	/* タスク表示 */
     	sendToModal($elem);
     });
 
-    
+    // クリックしたらカレンダー表示
+    $('#start-date').datepicker({
+        language:'ja'
+    });
+    // クリックしたら非表示入れ替わり
+    $('#start-date').on("click",function(){
+    	$('span.start-date-text').hide();
+    	$('input.start-date-text').show();
+    });
+
+	
 /////// 以下自作関数  ////////////////////////////////
  
  
@@ -306,6 +403,39 @@ function sendToModal($elem){
 	  }).always(function(XMLHttpRequest, textStatus) {
 
 	  });
+}
+    
+function insertNewTask(taskName,projectId,finishFlag){
+	
+	$.ajax({
+		// 送る内容
+		type: 'post',
+		url: '@routes.Detail.insertNewTask',
+		data: {'taskName':taskName, 'projectId':projectId, 'finishFlag':finishFlag},
+		cache: false,
+		timeout: 20000
+	}).done(function(data) {
+
+      	var taskObj = $.parseJSON(data);
+      	var taskId = taskObj.id;　//最新のタスクのidを取って来る
+      	var newTaskElem = '<div class="box__list-task" id="task-list" data-toggle="modal" data-target="#myModal">'
+      					 	+'<div class="box shadow-sm-original card border-light mb-2 inside-project">'
+      							+'<div class="task-header">'
+      								+ taskObj.name 
+      							+'</div>'
+      							+'<input type="hidden" name="task-id" value="' + taskId + '">'
+      					 		+'<div class="task-period"> - '
+      					 		+'</div>'
+      					 	'</div>'
+      					  '</div>';
+      	var tasksType = '#tasks-yet'; // 条件分岐(後で)
+      	$(tasksType).prepend(newTaskElem); // id="tasks-yet"に新しいタスク要素を追加
+      
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+    	ajaxFailedMessage();
+  }).always(function(XMLHttpRequest, textStatus) {
+
+  });
 }
     
 });

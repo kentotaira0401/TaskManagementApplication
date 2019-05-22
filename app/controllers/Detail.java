@@ -15,6 +15,7 @@ import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.CommonUtil;
+import utils.SqlUtil;
 
 public class Detail extends Controller{
 
@@ -26,7 +27,7 @@ public class Detail extends Controller{
 		Project project = Project.find.byId(id);
 		System.out.println("pro_id"+project.getId());
 		// プロジェクトIDからタスク情報を取得
-		List<Task> taskLists = Task.find.where().eq("project_id",project.getId()).order("display_order").findList();
+		List<Task> taskLists = Task.find.where().eq("project_id",project.getId()).orderBy().desc("display_order").findList();
 		List<TaskRequest> taskList = new ArrayList<>();
 		for(Task task: taskLists) {
 			TaskRequest taskRequest = getTaskRequest(task);
@@ -54,6 +55,7 @@ public class Detail extends Controller{
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    String json ="";
+	    
 		try {
 			json = mapper.writeValueAsString(taskObj);
 		} catch (JsonProcessingException e) {
@@ -63,6 +65,40 @@ public class Detail extends Controller{
 		return ok(json);
 	}
 
+	/**
+	 * 新タスクをinsert
+	 * その後
+	 * そのタスク情報を返す
+	 * 
+	 * @return
+	 */
+	public Result insertNewTask() {
+		
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		String newTaskName = form.data().get("taskName");
+		Long projectId = CommonUtil.getStr2Long(form.data().get("projectId"));
+		Integer finishFlag = CommonUtil.getStr2Int(form.data().get("finishFlag"));
+		Task task = new Task();
+		task.setName(newTaskName);
+		task.setProject_id(projectId);
+		task.setFinish_flag(finishFlag);
+		try {
+			task.save();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		task.setId(SqlUtil.getNewTaskId());				// 最新タスクのidを取得
+		ObjectMapper mapper = new ObjectMapper();
+	    String json ="";
+	    
+		try {
+			json = mapper.writeValueAsString(task);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return ok(json);
+	}
 	
 	private TaskRequest getTaskRequest(Task task) {
 		TaskRequest taskRequest = new TaskRequest();
@@ -71,8 +107,16 @@ public class Detail extends Controller{
 		taskRequest.setProject_id(task.getProject_id());
 		taskRequest.setName(task.getName());
 		taskRequest.setExplanation(task.getExplanation());
-		taskRequest.setStart_date((String)fmt.format(task.getStart_date()));		// formatを指定
-		taskRequest.setClosing_date((String)fmt.format(task.getClosing_date()));	// formatを指定
+		
+		try {
+			taskRequest.setStart_date((String)fmt.format(task.getStart_date()));		// formatを指定
+			taskRequest.setClosing_date((String)fmt.format(task.getClosing_date()));	// formatを指定
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		taskRequest.setStaff_id(task.getStaff_id());
 		taskRequest.setCategory_id(task.getCategory_id());
 		taskRequest.setFinish_flag(task.getFinish_flag());
