@@ -246,7 +246,7 @@
 						<li class="list-group-item">
 							<div class="start-date-class">
 								<i class="far fa-calendar"></i>
-								<span class="modal-span-class" id="start-date" >
+								<span class="modal-span-class add-date-calendar" id="start-date" >
 				                	<span class="start-date-text">開始日を追加</span>
 									<input type="text" class="form-control-sm start-date-text" id="start-date" style="display:none">			
 				              	</span>
@@ -255,8 +255,9 @@
 	              		<li class="list-group-item">
 							<div class="close-date-class">
 								<i class="far fa-calendar"></i>			
-								<span class="modal-span-class" id="close-date" >
-				                		締切日を追加
+								<span class="modal-span-class add-date-calendar" id="close-date" >
+				                	<span class="close-date-text">締切日を追加</span>
+									<input type="text" class="form-control-sm close-date-text" id="close-date" style="display:none">			
 				              	</span>
 			              	</div>
 	              		</li>
@@ -350,13 +351,13 @@ $(function(){
     });
 
     // クリックしたらカレンダー表示
-    $('#start-date').datepicker({
+    $('.add-date-calendar').datepicker({
         language:'ja'
     });
     // クリックしたら非表示入れ替わり
-    $('#start-date').on("click",function(){
-    	$('span.start-date-text').hide();
-    	$('input.start-date-text').show();
+    $('.add-date-calendar').on("click",function($elem){
+    	$($elem.target).parent().find('span').hide();
+    	$($elem.target).next().show();
     });
 
 	
